@@ -54,7 +54,12 @@ TESTLIST_BEGIN (basics)
   TESTENTRY (existing_instances_can_be_discovered)
   TESTENTRY (function_can_be_scheduled_on_a_dispatch_queue)
   TESTENTRY (performance)
+
+  TESTGROUP_BEGIN ("Regressions")
+    TESTENTRY (ivars_issue_18)
+  TESTGROUP_END ()
 TESTLIST_END ()
+
 
 @protocol FridaCalculator
 - (int)add:(int)value;
@@ -307,6 +312,15 @@ TESTCASE (ivars_can_be_accessed)
   EXPECT_SEND_MESSAGE_WITH ("\"calc.exe\"");
   EXPECT_SEND_MESSAGE_WITH ("\"Calculator\"");
   EXPECT_SEND_MESSAGE_WITH ("[\"isa\",\"name\"]");
+  EXPECT_NO_MESSAGES ();
+}
+
+TESTCASE (ivars_issue_18)
+{
+  COMPILE_AND_LOAD_SCRIPT (
+    "ObjC.chooseSync(ObjC.classes.NSString).map(function (instance) {"
+    "  return instance.$ivars;"
+    "});");
   EXPECT_NO_MESSAGES ();
 }
 

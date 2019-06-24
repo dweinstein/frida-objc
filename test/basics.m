@@ -315,15 +315,6 @@ TESTCASE (ivars_can_be_accessed)
   EXPECT_NO_MESSAGES ();
 }
 
-TESTCASE (ivars_issue_18)
-{
-  COMPILE_AND_LOAD_SCRIPT (
-    "ObjC.chooseSync(ObjC.classes.NSString).map(function (instance) {"
-    "  return instance.$ivars;"
-    "});");
-  EXPECT_NO_MESSAGES ();
-}
-
 TESTCASE (class_method_can_be_invoked)
 {
   COMPILE_AND_LOAD_SCRIPT (
@@ -927,3 +918,13 @@ TESTCASE (performance)
   g_print ("<%d ms> ", duration);
   test_message_item_free (item);
 }
+
+TESTCASE (ivars_issue_18)
+{
+  COMPILE_AND_LOAD_SCRIPT (
+    "ObjC.chooseSync(ObjC.classes.NSString).map(function (instance) {"
+    "  return instance.$ivars;"
+    "});");
+  EXPECT_NO_MESSAGES ();
+}
+
